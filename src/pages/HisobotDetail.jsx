@@ -138,29 +138,22 @@ const COL_W      = 112
 const INDEX_W    = 54
 const PRODUCT_W  = 260
 
+// Och-yashil rasmiy forma ohanglari — barcha guruhlar bir xil
+const HDR_SUPER = { bg: '#b9c79b', border: '#9bad77' }
+const HDR_SUB   = { bg: '#cdd9b4', border: '#9bad77' }
+const HDR_TEXT  = '#2f3a1a'
+
 const TONE_SUPER = {
-  slate:   { bg: '#334155', border: '#475569' },
-  blue:    { bg: '#1e40af', border: '#2563eb' },
-  teal:    { bg: '#0f766e', border: '#0d9488' },
-  emerald: { bg: '#065f46', border: '#059669' },
-  violet:  { bg: '#4c1d95', border: '#7c3aed' },
-  amber:   { bg: '#78350f', border: '#d97706' },
-  red:     { bg: '#7f1d1d', border: '#dc2626' },
+  slate: HDR_SUPER, blue: HDR_SUPER, teal: HDR_SUPER, emerald: HDR_SUPER,
+  violet: HDR_SUPER, amber: HDR_SUPER, red: HDR_SUPER,
 }
 
 const TONE_SUB = {
-  emerald: { bg: '#047857', border: '#059669' },
-  violet:  { bg: '#6d28d9', border: '#7c3aed' },
+  emerald: HDR_SUB, violet: HDR_SUB,
 }
 
 const TONE_COL = {
-  slate:   'bg-slate-50',
-  blue:    'bg-blue-50',
-  teal:    'bg-teal-50',
-  emerald: 'bg-emerald-50',
-  violet:  'bg-violet-50',
-  amber:   'bg-amber-50',
-  red:     'bg-red-50',
+  slate: '', blue: '', teal: '', emerald: '', violet: '', amber: '', red: '',
 }
 
 // ──────────────────────────────────────────────────────────────────────────────
@@ -323,7 +316,7 @@ export default function HisobotDetail() {
     justifyContent: 'center',
     flexShrink: 0,
     borderRight: '1px solid rgba(255,255,255,0.15)',
-    color: '#fff',
+    color: HDR_TEXT,
     fontWeight: 700,
     fontSize: 11,
     letterSpacing: 0.3,
@@ -391,8 +384,8 @@ export default function HisobotDetail() {
             {/* ══ ROW 1: Super-group labels ══════════════════════════════ */}
             <div style={{ display: 'flex', height: 32 }}>
               {/* sticky: index + product */}
-              <div style={{ ...stickyBase, width: INDEX_W, left: 0, background: '#0f172a' }} />
-              <div style={{ ...stickyBase, width: PRODUCT_W, left: INDEX_W, background: '#0f172a', justifyContent: 'flex-start', paddingLeft: 12 }}>
+              <div style={{ ...stickyBase, width: INDEX_W, left: 0, background: HDR_SUPER.bg }} />
+              <div style={{ ...stickyBase, width: PRODUCT_W, left: INDEX_W, background: HDR_SUPER.bg, justifyContent: 'flex-start', paddingLeft: 12 }}>
                 Mahsulot
               </div>
               {/* super-group cells */}
@@ -411,7 +404,7 @@ export default function HisobotDetail() {
                       background: t.bg,
                       borderRight: `1px solid ${t.border}`,
                       borderBottom: group.subgroups ? `1px solid ${t.border}` : 'none',
-                      color: '#fff',
+                      color: HDR_TEXT,
                       fontWeight: 700,
                       fontSize: 11,
                       letterSpacing: 0.3,
@@ -421,13 +414,13 @@ export default function HisobotDetail() {
                   </div>
                 )
               })}
-              <div style={{ width: 16, flexShrink: 0, background: '#0f172a' }} />
+              <div style={{ width: 16, flexShrink: 0, background: HDR_SUPER.bg }} />
             </div>
 
             {/* ══ ROW 2: Sub-group labels ═════════════════════════════════ */}
             <div style={{ display: 'flex', height: 24 }}>
-              <div style={{ ...stickyBase, width: INDEX_W, left: 0, background: '#1e293b', fontSize: 10 }} />
-              <div style={{ ...stickyBase, width: PRODUCT_W, left: INDEX_W, background: '#1e293b', justifyContent: 'flex-start', paddingLeft: 12, fontSize: 10 }}>
+              <div style={{ ...stickyBase, width: INDEX_W, left: 0, background: HDR_SUB.bg, fontSize: 10 }} />
+              <div style={{ ...stickyBase, width: PRODUCT_W, left: INDEX_W, background: HDR_SUB.bg, justifyContent: 'flex-start', paddingLeft: 12, fontSize: 10 }}>
                 Mahsulot turi
               </div>
               {SUPER_GROUPS.map((group) => {
@@ -446,7 +439,7 @@ export default function HisobotDetail() {
                           justifyContent: 'center',
                           background: st.bg,
                           borderRight: `1px solid ${st.border}`,
-                          color: '#e2e8f0',
+                          color: HDR_TEXT,
                           fontWeight: 700,
                           fontSize: 10,
                           letterSpacing: 0.2,
@@ -471,7 +464,7 @@ export default function HisobotDetail() {
                   />
                 )
               })}
-              <div style={{ width: 16, flexShrink: 0, background: '#1e293b' }} />
+              <div style={{ width: 16, flexShrink: 0, background: HDR_SUB.bg }} />
             </div>
 
             {/* ══ ROW 3: Column labels ════════════════════════════════════ */}
@@ -515,7 +508,7 @@ export default function HisobotDetail() {
                     </div>
 
                     {ALL_COLS.map((column) => {
-                      const isOptional = column.flag && !meta[column.flag]
+                      const isLocked   = column.flag && !meta[column.flag]
                       const changed    = !!edited[qator.id] && column.key in edited[qator.id]
                       const cellErr    = cellErrors[qator.id]?.[column.key]
 
@@ -548,6 +541,26 @@ export default function HisobotDetail() {
                         )
                       }
 
+                      // "x" belgilangan ustun — bu mahsulot uchun to'ldirilmaydi, qabul qilinmaydi
+                      if (isLocked) {
+                        return (
+                          <div
+                            key={column.key}
+                            className="sheet-cell"
+                            title="Bu mahsulot uchun to'ldirilmaydi"
+                            style={{
+                              width: COL_W,
+                              background: '#f1f5f9',
+                              justifyContent: 'center',
+                              cursor: 'not-allowed',
+                              userSelect: 'none',
+                            }}
+                          >
+                            <span style={{ fontSize: 13, fontWeight: 700, color: '#cbd5e1' }}>×</span>
+                          </div>
+                        )
+                      }
+
                       const value = getValue(qator, column.key)
                       return (
                         <div
@@ -555,17 +568,13 @@ export default function HisobotDetail() {
                           className={`sheet-cell ${changed ? 'changed' : ''}`}
                           style={{
                             width: COL_W,
-                            background: cellErr
-                              ? '#fff1f2'
-                              : isOptional && !value
-                              ? '#fafafa'
-                              : rowBg,
+                            background: cellErr ? '#fff1f2' : rowBg,
                             flexDirection: 'column',
                             alignItems: 'stretch',
                             padding: 0,
                             position: 'relative',
                           }}
-                          title={cellErr || (isOptional ? 'Ixtiyoriy maydon' : '')}
+                          title={cellErr || ''}
                         >
                           <input
                             type="number"
@@ -575,7 +584,7 @@ export default function HisobotDetail() {
                             value={value}
                             onChange={(e) => handleChange(qator.id, column.key, e.target.value)}
                             aria-label={`${qator.mahsulot_nomi} - ${column.label}`}
-                            placeholder={isOptional ? 'ixtiyoriy' : '0'}
+                            placeholder="0"
                             style={{
                               width: '100%',
                               height: '100%',
@@ -587,14 +596,7 @@ export default function HisobotDetail() {
                               background: 'transparent',
                               border: 'none',
                               outline: 'none',
-                              color: cellErr
-                                ? '#be123c'
-                                : changed
-                                ? '#92400e'
-                                : isOptional
-                                ? '#94a3b8'
-                                : '#1a2540',
-                              fontStyle: isOptional && !value ? 'italic' : 'normal',
+                              color: cellErr ? '#be123c' : changed ? '#92400e' : '#1a2540',
                             }}
                           />
                           {cellErr && (

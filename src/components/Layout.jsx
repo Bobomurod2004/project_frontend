@@ -13,6 +13,7 @@ const nav = [
   { to: '/', label: 'Bosh sahifa', icon: LayoutDashboard, end: true },
   { to: '/korxonalar', label: 'Korxonalar', icon: Building2 },
   { to: '/hisobotlar', label: 'Hisobotlar', icon: FileSpreadsheet },
+  { to: '/svod', label: 'Svod', icon: FileSpreadsheet },
 ]
 
 export default function Layout() {

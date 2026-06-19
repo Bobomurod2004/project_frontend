@@ -157,9 +157,14 @@ export default function Hisobotlar() {
         icon={FileSpreadsheet}
         meta={hasFilter ? <Badge tone="blue">Filtr faol</Badge> : <Badge>Barcha hisobotlar</Badge>}
         action={
-          <ActionButton onClick={openCreateModal}>
-            <Plus size={16} /> Yangi hisobot
-          </ActionButton>
+          <>
+            <Link to="/svod" className="btn btn-secondary">
+              <FileSpreadsheet size={16} /> Svod
+            </Link>
+            <ActionButton onClick={openCreateModal}>
+              <Plus size={16} /> Yangi hisobot
+            </ActionButton>
+          </>
         }
       />
 
@@ -247,6 +252,9 @@ export default function Hisobotlar() {
                     <td>{formatDateTime(hisobot.yangilangan)}</td>
                     <td className="text-right">
                       <div className="inline-flex items-center gap-2">
+                        <Link to={`/svod?korxona=${hisobot.korxona}&yil=${hisobot.yil}&oy=${hisobot.oy}`} className="btn btn-secondary !min-h-8 !px-3">
+                          <FileSpreadsheet size={13} /> Svod
+                        </Link>
                         <Link to={`/hisobotlar/${hisobot.id}`} className="btn btn-secondary !min-h-8 !px-3">
                           Ochish <ArrowRight size={13} />
                         </Link>

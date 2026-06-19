@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { korxonaAPI } from '../api'
 import Modal from '../components/Modal'
 import {
   Building2,
   CheckCircle2,
+  FileSpreadsheet,
   Mail,
   Pencil,
   Phone,
@@ -240,6 +242,9 @@ export default function Korxonalar() {
                     </td>
                     <td className="text-right">
                       <div className="inline-flex items-center gap-2">
+                        <Link to={`/svod?korxona=${korxona.id}`} className="btn btn-secondary !min-h-8 !px-3">
+                          <FileSpreadsheet size={14} /> Svod
+                        </Link>
                         <IconButton label="Tahrirlash" onClick={() => openEdit(korxona)}>
                           <Pencil size={14} />
                         </IconButton>

@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard'
 import Korxonalar from './pages/Korxonalar'
 import Hisobotlar from './pages/Hisobotlar'
 import HisobotDetail from './pages/HisobotDetail'
+import Svod from './pages/Svod'
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
           <Route path="korxonalar" element={<Korxonalar />} />
           <Route path="hisobotlar" element={<Hisobotlar />} />
           <Route path="hisobotlar/:id" element={<HisobotDetail />} />
+          <Route path="svod" element={<Svod />} />
         </Route>
       </Routes>
     </BrowserRouter>
